@@ -1,0 +1,20 @@
+/* App-specific global enhancements */
+
+/* Smooth scroll is handled by Lenis + CSS */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Parallax subtle on hero background handled by WaterCanvas mouse interaction */
+
+/* Reduced motion fallback */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
