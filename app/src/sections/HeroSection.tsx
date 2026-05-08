@@ -10,25 +10,29 @@ interface HeroSectionProps {
 }
 
 // Scatter configuration — expanded radius to avoid covering hero text
-const finalRotations = [-18, 22, -12, 8, -25];
+const finalRotations = [-12, 15, -8, 10, -18, 12, -15];
 
 const cardPositions = [
-  { left: '8%', top: '12%' },
-  { left: '78%', top: '14%' },
-  { left: '85%', top: '58%' },
-  { left: '6%', top: '62%' },
-  { left: '50%', top: '78%' },
+  { left: '4%', top: '8%' },    // Top Left
+  { left: '84%', top: '12%' },   // Top Right
+  { left: '88%', top: '50%' },   // Mid Right
+  { left: '5%', top: '58%' },    // Mid Left
+  { left: '16%', top: '32%' },   // Upper Mid Left
+  { left: '76%', top: '35%' },   // Upper Mid Right
+  { left: '3%', top: '78%' },    // Bottom Left
 ];
 
 const finalOffsets = [
-  { x: -60, y: 30 },
-  { x: 80, y: -20 },
-  { x: 120, y: 40 },
-  { x: -100, y: 60 },
-  { x: 40, y: -40 },
+  { x: 0, y: 0 },
+  { x: 0, y: 0 },
+  { x: 0, y: 0 },
+  { x: 0, y: 0 },
+  { x: 0, y: 0 },
+  { x: 0, y: 0 },
+  { x: 0, y: 0 },
 ];
 
-const zIndexes = [3, 5, 2, 4, 1];
+const zIndexes = [3, 5, 2, 4, 1, 6, 2];
 
 export default function HeroSection({ onOpenSlideshow }: HeroSectionProps) {
   const sectionRef = useRef<HTMLDivElement>(null);

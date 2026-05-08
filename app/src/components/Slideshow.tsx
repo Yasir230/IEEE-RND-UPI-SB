@@ -1,24 +1,21 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { humanizerID } from '../lib/humanizer-id';
 
 interface Slide {
   src: string;
-  title: string;
-  caption: string;
 }
 
 const SLIDES: Slide[] = [
-  { src: '/images/photo-workshop-1.jpg', title: 'Workshop 2023', caption: 'Bikin project bareng di workshop tahun ini' },
-  { src: '/images/photo-meeting-1.jpg', title: 'RND Meetup', caption: 'Ngumpul bareng tim RND, rame banget' },
-  { src: '/images/photo-team-1.jpg', title: 'Division Photo', caption: 'Foto bareng tim, kompak abis' },
-  { src: '/images/photo-coding-1.jpg', title: 'Late Night Session', caption: 'Ngoding sampe malem, seru tapi ngantuk' },
-  { src: '/images/photo-bonding-1.jpg', title: 'Team Bonding', caption: 'Momen bonding bareng tim RND' },
-  { src: '/images/photo-casual-1.jpg', title: 'Campus Hangout', caption: 'Hanging out di kampus, santai' },
-  { src: '/images/photo-event-1.jpg', title: 'Tech Talk 2023', caption: 'Tech Talk seru tentang teknologi terbaru' },
-  { src: '/images/photo-graduation-1.jpg', title: 'Graduation Day', caption: 'Hari wisuda, bangga banget' },
-  { src: '/images/photo-present-1.jpg', title: 'Project Presentation', caption: 'Nge-present hasil kerjaan kita' },
-  { src: '/images/photo-lab-1.jpg', title: 'Lab Research', caption: 'Riset di lab, eksplorasi ilmu baru' },
-  { src: '/images/photo-candid-1.jpg', title: 'Between Classes', caption: 'Di sela kuliah, tetap produktif' },
+  { src: '/images/photo-workshop-1.jpg' },
+  { src: '/images/photo-meeting-1.jpg' },
+  { src: '/images/photo-team-1.jpg' },
+  { src: '/images/photo-coding-1.jpg' },
+  { src: '/images/photo-bonding-1.jpg' },
+  { src: '/images/photo-casual-1.jpg' },
+  { src: '/images/photo-event-1.jpg' },
+  { src: '/images/photo-graduation-1.jpg' },
+  { src: '/images/photo-present-1.jpg' },
+  { src: '/images/photo-lab-1.jpg' },
+  { src: '/images/photo-candid-1.jpg' },
 ];
 
 const TRANSITIONS = [
@@ -214,8 +211,6 @@ export default function Slideshow({ open, onClose, onRequestMusic }: SlideshowPr
   if (!open) return null;
 
   const slide = SLIDES[current];
-  const humanTitle = humanizerID(slide.title);
-  const humanCaption = humanizerID(slide.caption);
 
   return (
     <div
@@ -225,15 +220,25 @@ export default function Slideshow({ open, onClose, onRequestMusic }: SlideshowPr
       onMouseMove={bumpOverlay}
       onTouchStart={bumpOverlay}
     >
-      {/* Background layers for crossfade */}
+      {/* Image layers for crossfade */}
       <div className="absolute inset-0 overflow-hidden">
         <div
           key={slide.src + '-' + current}
-          className={`absolute inset-0 bg-cover bg-center transition-all duration-700 ease-in-out ${
+          className={`absolute inset-0 transition-all duration-700 ease-in-out ${
             phase === 'enter' ? getTransitionClass(transition, 'enter') : getTransitionClass(transition, 'exit')
           }`}
-          style={{ backgroundImage: `url(${slide.src})` }}
-        />
+        >
+          <img
+            src={slide.src}
+            alt={`Slide ${current + 1}`}
+            className="w-full h-full"
+            style={{
+              objectFit: 'cover',
+              objectPosition: 'center',
+            }}
+            draggable={false}
+          />
+        </div>
       </div>
 
       {/* Vignette */}
@@ -244,40 +249,7 @@ export default function Slideshow({ open, onClose, onRequestMusic }: SlideshowPr
         }}
       />
 
-      {/* Text overlay */}
-      <div className="absolute inset-0 flex flex-col items-center justify-end pb-24 md:pb-32 px-6">
-        <div className="text-center max-w-3xl">
-          <h2
-            className="font-heading-section text-white mb-3"
-            style={{ textShadow: '0 2px 20px rgba(0,0,0,0.5)' }}
-          >
-            {humanTitle.split(' ').map((word, i) => (
-              <span
-                key={i}
-                className="inline-block mr-2"
-                style={{
-                  animation: phase === 'enter' ? `wordIn 0.5s ease forwards` : `wordOut 0.3s ease forwards`,
-                  animationDelay: phase === 'enter' ? `${i * 0.08}s` : '0s',
-                  opacity: phase === 'enter' ? 0 : 1,
-                }}
-              >
-                {word}
-              </span>
-            ))}
-          </h2>
-          <p
-            className="font-body text-white/80"
-            style={{
-              textShadow: '0 1px 10px rgba(0,0,0,0.5)',
-              animation: phase === 'enter' ? 'captionUp 0.7s ease forwards' : 'captionDown 0.4s ease forwards',
-              animationDelay: phase === 'enter' ? '0.3s' : '0s',
-              opacity: phase === 'enter' ? 0 : 1,
-            }}
-          >
-            {humanCaption}
-          </p>
-        </div>
-      </div>
+
 
       {/* Top controls overlay (auto-hide) */}
       <div
@@ -328,22 +300,6 @@ export default function Slideshow({ open, onClose, onRequestMusic }: SlideshowPr
       />
 
       <style>{`
-        @keyframes wordIn {
-          from { opacity: 0; transform: translateY(12px); }
-          to   { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes wordOut {
-          from { opacity: 1; transform: translateY(0); }
-          to   { opacity: 0; transform: translateY(-8px); }
-        }
-        @keyframes captionUp {
-          from { opacity: 0; transform: translateY(16px); }
-          to   { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes captionDown {
-          from { opacity: 1; transform: translateY(0); }
-          to   { opacity: 0; transform: translateY(10px); }
-        }
 
         .slide-enter-kenburns {
           animation: kenburnsIn 6s ease forwards;

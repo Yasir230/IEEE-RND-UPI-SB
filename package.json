@@ -1,0 +1,11 @@
+{
+  "name": "ieee-rnd-upi-sb-root",
+  "private": true,
+  "scripts": {
+    "dev": "npm run dev --prefix app",
+    "build": "npm run build --prefix app",
+    "lint": "npm run lint --prefix app",
+    "preview": "npm run preview --prefix app",
+    "install-all": "npm install --prefix app"
+  }
+}

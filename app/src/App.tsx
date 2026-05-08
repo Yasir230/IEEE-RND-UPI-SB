@@ -106,7 +106,7 @@ function App() {
         <FeaturedMemorySection />
         <FooterSection />
       </main>
-      <AudioPlayer />
+      <AudioPlayer slideshowActive={slideshowOpen} />
       <Slideshow open={slideshowOpen} onClose={closeSlideshow} onRequestMusic={requestMusic} />
       <SlideshowAudio active={slideshowMusic} />
     </div>

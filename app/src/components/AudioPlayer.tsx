@@ -2,7 +2,11 @@ import { useEffect, useRef, useState, useCallback } from 'react';
 
 const AUDIO_SRC = '/audio/she-and-him.mp3';
 
-export default function AudioPlayer() {
+interface AudioPlayerProps {
+  slideshowActive?: boolean;
+}
+
+export default function AudioPlayer({ slideshowActive = false }: AudioPlayerProps) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [hasInteracted, setHasInteracted] = useState(false);
@@ -13,6 +17,29 @@ export default function AudioPlayer() {
   const progressBarRef = useRef<HTMLDivElement>(null);
   const volBarRef = useRef<HTMLDivElement>(null);
   const rafRef = useRef<number>(0);
+  const wasPlayingRef = useRef(false);
+
+  // Music handoff: pause when slideshow opens, resume when it closes
+  useEffect(() => {
+    if (!audioRef.current) return;
+
+    if (slideshowActive) {
+      // Entering slideshow — remember state and pause
+      wasPlayingRef.current = isPlaying;
+      if (isPlaying) {
+        audioRef.current.pause();
+        setIsPlaying(false);
+      }
+    } else {
+      // Leaving slideshow — resume if was playing before
+      if (wasPlayingRef.current) {
+        audioRef.current.play().then(() => {
+          setIsPlaying(true);
+        }).catch(() => {});
+        wasPlayingRef.current = false;
+      }
+    }
+  }, [slideshowActive]);
 
   // Create audio element
   useEffect(() => {
@@ -32,11 +59,38 @@ export default function AudioPlayer() {
     });
 
     // Try autoplay
-    audio.play().catch(() => {
-      // Autoplay blocked - wait for user interaction
-    });
+    audio
+      .play()
+      .then(() => {
+        setIsPlaying(true);
+        setHasInteracted(true);
+      })
+      .catch(() => {
+        // Autoplay blocked — wait for any user interaction
+        const unlock = () => {
+          audio
+            .play()
+            .then(() => {
+              setIsPlaying(true);
+              setHasInteracted(true);
+            })
+            .catch(() => {});
+          window.removeEventListener('click', unlock);
+          window.removeEventListener('touchstart', unlock);
+        };
+        window.addEventListener('click', unlock, { once: false });
+        window.addEventListener('touchstart', unlock, { once: false });
+
+        // Store for cleanup
+        (audio as any).__unlockFn = unlock;
+      });
 
     return () => {
+      const unlockFn = (audio as any).__unlockFn;
+      if (unlockFn) {
+        window.removeEventListener('click', unlockFn);
+        window.removeEventListener('touchstart', unlockFn);
+      }
       audio.pause();
       audio.src = '';
     };
@@ -139,6 +193,9 @@ export default function AudioPlayer() {
         left: '50%',
         transform: 'translateX(-50%)',
         width: 'min(520px, 92vw)',
+        opacity: slideshowActive ? 0 : 1,
+        pointerEvents: slideshowActive ? 'none' : 'auto',
+        transition: 'opacity 0.4s ease',
       }}
     >
       {/* Speaker pulse rings */}

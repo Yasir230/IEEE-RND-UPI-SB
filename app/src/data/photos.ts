@@ -7,11 +7,20 @@ export interface Photo {
 }
 
 export const heroPhotos: Photo[] = [
-  { id: 'h1', src: '/images/photo-workshop-1.jpg', caption: '', rotation: -2 },
-  { id: 'h2', src: '/images/photo-meeting-1.jpg', caption: '', rotation: 1.5 },
-  { id: 'h3', src: '/images/photo-team-1.jpg', caption: '', rotation: -1 },
-  { id: 'h4', src: '/images/photo-coding-1.jpg', caption: '', rotation: 2.5 },
-  { id: 'h5', src: '/images/photo-bonding-1.jpg', caption: '', rotation: -3 },
+  /* 📸 REPLACE: swap src with your actual photo path */
+  { id: 'h1', src: '/images/hero-new/hero-1.jpg', caption: 'PHOTOBOOTH', rotation: -2 },
+  /* 📸 REPLACE: swap src with your actual photo path */
+  { id: 'h2', src: '/images/hero-new/hero-2.jpg', caption: 'PHOTOBOOTH part 2', rotation: 1.5 },
+  /* 📸 REPLACE: swap src with your actual photo path */
+  { id: 'h3', src: '/images/hero-new/hero-3.jpg', caption: 'Bukber', rotation: -1 },
+  /* 📸 REPLACE: swap src with your actual photo path */
+  { id: 'h4', src: '/images/hero-new/hero-4.jpg', caption: 'Bukber part 2', rotation: 2.5 },
+  /* 📸 REPLACE: swap src with your actual photo path */
+  { id: 'h5', src: '/images/hero-new/hero-5.jpg', caption: 'Bukber part 3', rotation: -3 },
+  /* 📸 REPLACE: swap src with your actual photo path */
+  { id: 'h6', src: '/images/hero-new/hero-6.jpg', caption: 'LUCUUUUUU', rotation: 1.8 },
+  /* 📸 REPLACE: swap src with your actual photo path */
+  { id: 'h7', src: '/images/hero-new/hero-7.jpg', caption: 'RND N NYA APA MAKANN', rotation: -2.2 },
 ];
 
 export const galleryPhotos: Photo[] = [

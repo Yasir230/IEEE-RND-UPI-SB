@@ -4,12 +4,11 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const divisions = ['RND', 'Community', 'Content', 'External Relations'];
-const resources = ['Google Drive', 'GitHub', 'Documentation'];
+const resources = [
+  { name: 'Google Drive', href: 'https://drive.google.com/drive/folders/1BEozNDufvFBQRz3qp5r94K04Em4UmFZj' },
+];
 const socials = [
-  { name: 'Instagram', href: '#' },
-  { name: 'LinkedIn', href: '#' },
-  { name: 'Email', href: 'mailto:ieee@upi.edu' },
+  { name: 'Instagram', href: 'https://www.instagram.com/ieeeupisb?igsh=MXE0OTZram9tbHBoaQ==' },
 ];
 
 export default function FooterSection() {
@@ -65,9 +64,9 @@ export default function FooterSection() {
         </p>
       </div>
 
-      {/* Three Column Grid */}
+      {/* Footer Grid */}
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
-        {/* Column 1 */}
+        {/* Column 1 — About */}
         <div className="footer-col">
           <h3 className="font-label mb-4" style={{ color: '#FFFFFF' }}>
             IEEE UPI SB
@@ -78,53 +77,35 @@ export default function FooterSection() {
           </p>
         </div>
 
-        {/* Column 2 */}
+        {/* Column 2 — Resources */}
         <div className="footer-col">
-          <div className="grid grid-cols-2 gap-8">
-            <div>
-              <h4
-                className="font-label mb-4"
-                style={{ color: 'rgba(255,255,255,0.5)', fontSize: 10 }}
-              >
-                DIVISIONS
-              </h4>
-              <ul className="space-y-2">
-                {divisions.map((d) => (
-                  <li key={d}>
-                    <span
-                      className="font-body-sm inline-block transition-all duration-300 hover:text-[#48CAE4] hover:translate-x-1 cursor-pointer"
-                      style={{ color: 'rgba(255,255,255,0.7)' }}
-                    >
-                      {d}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <h4
-                className="font-label mb-4"
-                style={{ color: 'rgba(255,255,255,0.5)', fontSize: 10 }}
-              >
-                RESOURCES
-              </h4>
-              <ul className="space-y-2">
-                {resources.map((r) => (
-                  <li key={r}>
-                    <span
-                      className="font-body-sm inline-block transition-all duration-300 hover:text-[#48CAE4] hover:translate-x-1 cursor-pointer"
-                      style={{ color: 'rgba(255,255,255,0.7)' }}
-                    >
-                      {r}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
+          <h4
+            className="font-label mb-4"
+            style={{ color: 'rgba(255,255,255,0.5)', fontSize: 10 }}
+          >
+            RESOURCES
+          </h4>
+          <ul className="space-y-3">
+            {resources.map((r) => (
+              <li key={r.name}>
+                <a
+                  href={r.href}
+                  className="font-body-sm inline-flex items-center gap-2 transition-all duration-300 hover:text-[#48CAE4] hover:translate-x-1"
+                  style={{ color: 'rgba(255,255,255,0.7)' }}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {r.name}
+                  <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
+                    <path d="M6 4h6v6M12 4L5 11" />
+                  </svg>
+                </a>
+              </li>
+            ))}
+          </ul>
         </div>
 
-        {/* Column 3 */}
+        {/* Column 3 — Connect */}
         <div className="footer-col">
           <h4
             className="font-label mb-4"
@@ -139,15 +120,13 @@ export default function FooterSection() {
                   href={s.href}
                   className="font-body-sm inline-flex items-center gap-2 transition-all duration-300 hover:text-[#48CAE4] hover:translate-x-1"
                   style={{ color: 'rgba(255,255,255,0.7)' }}
-                  target={s.href.startsWith('http') ? '_blank' : undefined}
-                  rel={s.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
                   {s.name}
-                  {s.href.startsWith('http') && (
-                    <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
-                      <path d="M6 4h6v6M12 4L5 11" />
-                    </svg>
-                  )}
+                  <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
+                    <path d="M6 4h6v6M12 4L5 11" />
+                  </svg>
                 </a>
               </li>
             ))}
